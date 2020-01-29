@@ -1,25 +1,28 @@
 #include "dashboard.h"
-#include <QPushButton>
-#include <QList>
 
-Dashboard::Dashboard(QWidget *parent) :
-	QWidget(parent)
+Dashboard::Dashboard(QObject *parent) :
+	QObject(parent)
 {
-	// Set size of window
-	setFixedSize(800, 480);
 
-	// Create and position button
-	QList<QPushButton*> buttonList;
-	m_musicButton = new QPushButton("Music", this);
-	m_radioButton = new QPushButton("Radio", this);
-	m_navigationButton = new QPushButton("Navigation", this);
-	buttonList << m_musicButton;
-	buttonList.append(m_radioButton);
-	buttonList.append(m_navigationButton);
+}
 
-	for(int i = 0; i < buttonList.size(); i++){
-		int yValue = 20 + i * 50;
-		buttonList.at(i)->setGeometry(50, yValue, 100, 40);
-	}
+void Dashboard::setUIWindow(QQuickWindow* window){
+	m_window = window;
+	qDebug() << "setup ui window";
+	QObject::connect(m_window, SIGNAL(musicPressed()), this, SLOT(musicButtonPressed()));
+	QObject::connect(m_window, SIGNAL(cameraPressed()), this, SLOT(cameraButtonPressed()));
+	QObject::connect(m_window, SIGNAL(radioPressed()), this, SLOT(radioButtonPressed()));
+}
+
+void Dashboard::musicButtonPressed(){
+	qDebug() << "music pressed";
+}
+
+void Dashboard::radioButtonPressed(){
+	qDebug() << "radio pressed";
+}
+
+void Dashboard::cameraButtonPressed(){
+	qDebug() << "camera pressed";
 }
 

@@ -1,19 +1,34 @@
 #ifndef DASHBOARD_H
 #define DASHBOARD_H
 
-#include <QWidget>
+#include <QtCore/QObject>
+#include <QDebug>
+#include <QQuickWindow>
+#include <QString>
+
 
 class QPushButton;
-class Dashboard : public QWidget
+class QQuickWindow;
+class Dashboard : public QObject
 {
-  public:
-    explicit Dashboard(QWidget *parent = 0);
-  private:
-    QPushButton *m_musicButton;
-    QPushButton *m_navigationButton;
-    QPushButton *m_radioButton;
-    QPushButton *m_cameraButton;
-    QPushButton *m_settingsButton;
+	Q_OBJECT
+
+public:
+    explicit Dashboard(QObject *parent = nullptr);
+
+public slots: 
+	void setUIWindow(QQuickWindow* window);
+
+private slots:
+	void musicButtonPressed();
+	void radioButtonPressed();
+	void cameraButtonPressed();
+  
+signals:
+
+
+private:
+	QQuickWindow *m_window;
 };
 
 #endif // DASHBOARD_H
