@@ -5,6 +5,7 @@ MusicPlayer::MusicPlayer(QObject *parent) :
 	QObject(parent)
 {
 	player = new QMediaPlayer;
+//    connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
 	this->setSongName("toxicity.mp3");
 
 }
@@ -28,9 +29,10 @@ void MusicPlayer::setSongName(const QString &songName)
 
 
 void MusicPlayer::start(){
-	qDebug()<<"pressed";
-	
-	player->play();
+    qDebug()<<"Music player: start pressed";
+    player->setMedia(QUrl::fromLocalFile("/home/fanny/Musik/toxicity.mp3"));
+    player->setVolume(50);
+    player->play();
 }
 
 void MusicPlayer::stop(){

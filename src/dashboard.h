@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QQuickWindow>
 #include <QString>
+#include <QGeoRoute>
+#include "musicplayer.h"
 
 
 class QPushButton;
@@ -29,6 +31,7 @@ signals:
 
 private:
 	QQuickWindow *m_window;
+    MusicPlayer *m_musicPlayer;
 };
 
 #endif // DASHBOARD_H

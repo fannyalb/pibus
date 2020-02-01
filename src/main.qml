@@ -2,92 +2,184 @@ import QtQuick 2.12
 import QtQuick.Controls 2.6
 
 ApplicationWindow{
-	id: root
-	width: 800
-	height: 480
-	visible: true
-	signal musicPressed()
-	signal radioPressed()
-	signal cameraPressed()
+    height: 480
+    width: 800
+    visible: true
 
-	menuBar: MenuBar {
-		Menu {
-			title: qsTr("File")
-			MenuItem {
-				text: qsTr("&open")
-				onTriggered: console.log("Open action triggered");
-			}
-			MenuItem {
-				text: qsTr("Exit")
-				onTriggered: Qt.quit();
-			}
-		}
+    signal musicPressed()
+    signal radioPressed()
+    signal cameraPressed()
 
-	}
+    property int abstand: 30
+    property int buttonHeight: 75
+    property int buttonWidth: 150
+    property string musicColor: "#2275A5"
+    property string radioColor: "#EA7317"
+    property string cameraColor: "#EEC601"
+    property string navigationColor: "#73BEB8"
+    property string otherColor: "#3DA5D9"
 
 
-	property int abstand: 30
+    menuBar: MenuBar {
+        MenuBarItem {
+            id: backButton
+            visible: stack.depth > 1
+            enabled: stack.depth > 1
+            text: "<"
+            onClicked: stack.pop()
+        }
+    }
 
-	Item {
-		y: abstand
-		x: abstand
-		height: 80
-		width: 3*height + 2*abstand
+    StackView {
+        id: stack
+        initialItem: dashboardView
+        anchors.fill: parent
+    }
 
-	Rectangle { 
-		id: musicbutton
-		color: "green"
-		width: parent.height
-		height: parent.height
-		anchors.left: parent.left
-		anchors.top: parent.top
+    Item {
+        id: dashboardView
+        height: 80
+        width: 4*buttonWidth + 3*abstand
+        anchors.centerIn: parent
 
-		Text {
-			text: "Musik"
-		}
 
-		TapHandler {
-			onTapped: musicPressed()
-		}
-	}
+        Rectangle {
+            id: musicbutton
+            color: musicColor
+            width: buttonWidth
+            height: buttonHeight
+            anchors.left: parent.left
+            anchors.top: parent.top
 
-	Rectangle { 
-		id: radiobutton
-		width: parent.height
-		height: parent.height
-		anchors.left: musicbutton.right
-		anchors.leftMargin: abstand
-		anchors.top: parent.top
-		color: "red"
+            Text {
+                text: "Musik"
+                anchors.centerIn: parent
+            }
 
-		Text {
-			text: "Radio"
-		}
-		TapHandler {
-			onTapped: radioPressed()
-		}
-	}
+            TapHandler {
+                onTapped: {
+                    musicPressed()
+                    stack.push(musicView)
+                }
 
-	Rectangle { 
-		id: camerabutton
-		width: parent.height
-		height: parent.height
-		anchors.left: radiobutton.right
-		anchors.leftMargin: abstand
-		anchors.top: parent.top
-		color: "yellow"
+            }
+        }
 
-		Text {
-			text: "Camera"
-		}
-		TapHandler {
-			onTapped: cameraPressed()
-		}
-	}
+        Rectangle {
+            id: radiobutton
+            width: buttonWidth
+            height: buttonHeight
+            anchors.left: musicbutton.right
+            anchors.leftMargin: abstand
+            anchors.top: parent.top
+            color: radioColor
+
+            Text {
+                text: "Radio"
+                anchors.centerIn: parent
+            }
+            TapHandler {
+                onTapped: stack.push(radioView)
+            }
+        }
+
+        Rectangle {
+            id: camerabutton
+            width: buttonWidth
+            height: buttonHeight
+            anchors.left: radiobutton.right
+            anchors.leftMargin: abstand
+            anchors.top: parent.top
+            color: cameraColor
+
+            Text {
+                text: "Camera"
+                anchors.centerIn: parent
+            }
+
+            TapHandler {
+                onTapped: stack.push(cameraView)
+            }
+        }
+
+        // navigation
+        Rectangle {
+            id: navigationbutton
+            width: buttonWidth
+            height: buttonHeight
+            anchors.left: camerabutton.right
+            anchors.leftMargin: abstand
+            anchors.top: parent.top
+            color: navigationColor
+
+            Text {
+                text: "Navigation"
+                anchors.centerIn: parent
+            }
+
+            TapHandler {
+                onTapped: stack.push(navigationView)
+            }
+        }
+    }
+
+    // Music View
+    Item {
+        id: musicView
+        visible: false
+        width: parent.width
+        height: parent.height
+
+        Rectangle {
+            color: musicColor
+            width: parent.width
+            height: parent.height
+        }
+    }
+
+    // Radio View
+    Item {
+        id: radioView
+        visible: false
+        width: parent.width
+        height: parent.height
+
+        Rectangle {
+            color: radioColor
+            width: parent.width
+            height: parent.height
+        }
+    }
+
+    // Camera View
+    Item {
+        id: cameraView
+        visible: false
+        width: parent.width
+        height: parent.height
+
+        Rectangle {
+            color: cameraColor
+            width: parent.width
+            height: parent.height
+        }
+    }
+
+    // Navigation View
+    Item {
+        id: navigationView
+        visible: false
+        width: parent.width
+        height: parent.height
+
+        Rectangle {
+            color: navigationColor
+            width: parent.width
+            height: parent.height
+        }
+    }
 
 
 
 }
-
-	}
 

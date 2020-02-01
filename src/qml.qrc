@@ -1,6 +1,7 @@
 <RCC>
-
-	<qresource prefix="/">
-		<file>main.qml</file>
-	</qresource>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>navigation.qml</file>
+        <file>Dashboard.qml</file>
+    </qresource>
 </RCC>

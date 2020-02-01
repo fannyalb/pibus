@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_LOCATION_LIB -DQT_POSITIONINGQUICK_LIB -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_POSITIONING_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtMultimedia -isystem /usr/include/qt5/QtQuick -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtQml -isystem /usr/include/qt5/QtNetwork -isystem /usr/include/qt5/QtCore -I. -isystem /usr/include/libdrm -I/usr/lib64/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtMultimedia -isystem /usr/include/qt5/QtLocation -isystem /usr/include/qt5/QtPositioningQuick -isystem /usr/include/qt5/QtQuick -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtQml -isystem /usr/include/qt5/QtNetwork -isystem /usr/include/qt5/QtPositioning -isystem /usr/include/qt5/QtCore -I. -isystem /usr/include/libdrm -I/usr/lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib64/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = pibus1.0.0
 DISTDIR = /home/fanny/gitprogs/pibus/.tmp/pibus1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
-LIBS          = $(SUBLIBS) /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Multimedia.so /usr/lib64/libQt5Quick.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Qml.so /usr/lib64/libQt5Network.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so -lpthread   
+LIBS          = $(SUBLIBS) /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Multimedia.so /usr/lib64/libQt5Location.so /usr/lib64/libQt5PositioningQuick.so /usr/lib64/libQt5Quick.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Qml.so /usr/lib64/libQt5Network.so /usr/lib64/libQt5Positioning.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -212,6 +212,8 @@ DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_hunspellinputmethod_private.pri \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_input_support_private.pri \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
+		/usr/lib64/qt5/mkspecs/modules/qt_lib_location.pri \
+		/usr/lib64/qt5/mkspecs/modules/qt_lib_location_private.pri \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_multimedia.pri \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_multimedia_private.pri \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri \
@@ -509,6 +511,8 @@ Makefile: pibus.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf /usr/lib64/qt5/m
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_hunspellinputmethod_private.pri \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_input_support_private.pri \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
+		/usr/lib64/qt5/mkspecs/modules/qt_lib_location.pri \
+		/usr/lib64/qt5/mkspecs/modules/qt_lib_location_private.pri \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_multimedia.pri \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_multimedia_private.pri \
 		/usr/lib64/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri \
@@ -794,6 +798,8 @@ Makefile: pibus.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf /usr/lib64/qt5/m
 /usr/lib64/qt5/mkspecs/modules/qt_lib_hunspellinputmethod_private.pri:
 /usr/lib64/qt5/mkspecs/modules/qt_lib_input_support_private.pri:
 /usr/lib64/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri:
+/usr/lib64/qt5/mkspecs/modules/qt_lib_location.pri:
+/usr/lib64/qt5/mkspecs/modules/qt_lib_location_private.pri:
 /usr/lib64/qt5/mkspecs/modules/qt_lib_multimedia.pri:
 /usr/lib64/qt5/mkspecs/modules/qt_lib_multimedia_private.pri:
 /usr/lib64/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri:
@@ -975,6 +981,8 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
 qrc_qml.cpp: src/qml.qrc \
 		/usr/lib64/qt5/bin/rcc \
+		src/Dashboard.qml \
+		src/navigation.qml \
 		src/main.qml
 	/usr/lib64/qt5/bin/rcc -name qml src/qml.qrc -o qrc_qml.cpp
 
@@ -988,14 +996,15 @@ compiler_moc_header_make_all: moc_dashboard.cpp moc_musicplayer.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_dashboard.cpp moc_musicplayer.cpp
 moc_dashboard.cpp: src/dashboard.h \
+		src/musicplayer.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/fanny/gitprogs/pibus/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/fanny/gitprogs/pibus -I/home/fanny/gitprogs/pibus -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include src/dashboard.h -o moc_dashboard.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/fanny/gitprogs/pibus/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/fanny/gitprogs/pibus -I/home/fanny/gitprogs/pibus -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtLocation -I/usr/include/qt5/QtPositioningQuick -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtPositioning -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include src/dashboard.h -o moc_dashboard.cpp
 
 moc_musicplayer.cpp: src/musicplayer.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/fanny/gitprogs/pibus/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/fanny/gitprogs/pibus -I/home/fanny/gitprogs/pibus -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include src/musicplayer.h -o moc_musicplayer.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/fanny/gitprogs/pibus/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/fanny/gitprogs/pibus -I/home/fanny/gitprogs/pibus -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtLocation -I/usr/include/qt5/QtPositioningQuick -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtPositioning -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include src/musicplayer.h -o moc_musicplayer.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1013,13 +1022,15 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-dashboard.o: src/dashboard.cpp src/dashboard.h
+dashboard.o: src/dashboard.cpp src/dashboard.h \
+		src/musicplayer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dashboard.o src/dashboard.cpp
 
 musicplayer.o: src/musicplayer.cpp src/musicplayer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o musicplayer.o src/musicplayer.cpp
 
-pibus.o: src/pibus.cpp src/dashboard.h
+pibus.o: src/pibus.cpp src/dashboard.h \
+		src/musicplayer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pibus.o src/pibus.cpp
 
 qrc_qml.o: qrc_qml.cpp 

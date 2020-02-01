@@ -6,7 +6,7 @@ TEMPLATE = app
 TARGET = pibus
 INCLUDEPATH += .
 RESOURCES = src/qml.qrc
-QT += widgets qml multimedia quick
+QT += widgets qml multimedia quick location
 
 # The following define makes your compiler warn you if you use any
 # feature of Qt which has been marked as deprecated (the exact warnings
