@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MusicPlayer_t {
-    QByteArrayData data[4];
-    char stringdata0[38];
+    QByteArrayData data[7];
+    char stringdata0[73];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,10 +35,14 @@ static const qt_meta_stringdata_MusicPlayer_t qt_meta_stringdata_MusicPlayer = {
 QT_MOC_LITERAL(0, 0, 11), // "MusicPlayer"
 QT_MOC_LITERAL(1, 12, 15), // "songNameChanged"
 QT_MOC_LITERAL(2, 28, 0), // ""
-QT_MOC_LITERAL(3, 29, 8) // "songName"
+QT_MOC_LITERAL(3, 29, 11), // "pausePlayer"
+QT_MOC_LITERAL(4, 41, 11), // "startPlayer"
+QT_MOC_LITERAL(5, 53, 10), // "stopPlayer"
+QT_MOC_LITERAL(6, 64, 8) // "songName"
 
     },
-    "MusicPlayer\0songNameChanged\0\0songName"
+    "MusicPlayer\0songNameChanged\0\0pausePlayer\0"
+    "startPlayer\0stopPlayer\0songName"
 };
 #undef QT_MOC_LITERAL
 
@@ -48,21 +52,31 @@ static const uint qt_meta_data_MusicPlayer[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
-       1,   20, // properties
+       4,   14, // methods
+       1,   38, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   19,    2, 0x06 /* Public */,
+       1,    0,   34,    2, 0x06 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags
+       3,    0,   35,    2, 0x08 /* Private */,
+       4,    0,   36,    2, 0x08 /* Private */,
+       5,    0,   37,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
 
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+
  // properties: name, type, flags
-       3, QMetaType::QString, 0x00495103,
+       6, QMetaType::QString, 0x00495103,
 
  // properties: notify_signal_id
        0,
@@ -77,6 +91,9 @@ void MusicPlayer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->songNameChanged(); break;
+        case 1: _t->pausePlayer(); break;
+        case 2: _t->startPlayer(); break;
+        case 3: _t->stopPlayer(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -141,13 +158,13 @@ int MusicPlayer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 4)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 1;
+        _id -= 4;
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty

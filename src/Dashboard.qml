@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.
+import QtQuick.Controls 2.5
 Item {
         id: dashboardView
         property int abstand: 30
@@ -14,7 +14,10 @@ Item {
             anchors.left: parent.left
             color: musicColor
             text: "Musik"
-            onClicked: stack.push(musicView)
+            onClicked: {
+                musicPressed()
+                stack.push(musicView)
+            }
         }
 
         DashboardButton {

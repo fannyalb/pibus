@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QMediaPlayer>
+#include <QQuickWindow>
 
 class MusicPlayer : public QObject
 {
@@ -11,21 +12,30 @@ class MusicPlayer : public QObject
 	Q_PROPERTY(QString songName READ songName WRITE setSongName NOTIFY songNameChanged)
 
 public:
-    explicit MusicPlayer(QObject *parent = nullptr);
+    explicit MusicPlayer(QObject *parent = nullptr, QQuickWindow* window = nullptr);
+    void start();
+    QString songName();
+    void setSongName(QString &songName);
 
-	QString songName();
-	void setSongName(const QString &songName);
-	void start();
-	void stop();
-  
+private slots:
+    void pausePlayer();
+    void startPlayer();
+    void stopPlayer();
+
 signals:
 	void songNameChanged();
 
 
 private:
-	QString m_songName;
-	QMediaPlayer *player;
+    QString m_songName;
+    QMediaPlayer* m_player;
+    QQuickWindow* m_window;
+    QObject* m_musicView;
+    bool m_isActive;
+    bool m_isStartup;
 
+    void initPlayer();
+    void setUIMusicView();
 };
 
 #endif // MUSICPLAYER_H

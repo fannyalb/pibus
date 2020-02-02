@@ -38,18 +38,10 @@ ApplicationWindow{
         id: dashboardView
     }
 
-    // Music View
-    Item {
-        id: musicView
-        visible: false
-        width: parent.width
-        height: parent.height
 
-        Rectangle {
-            color: musicColor
-            width: parent.width
-            height: parent.height
-        }
+    // Music View
+    MusicView {
+        id: musicView
     }
 
     // Radio View
