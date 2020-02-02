@@ -9,7 +9,7 @@ int main(int argc, char **argv){
 
 	QQmlApplicationEngine engine;
 	Dashboard dashboard;
-	engine.load(QUrl(QStringLiteral("qrc:main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 	dashboard.setUIWindow(qobject_cast<QQuickWindow*>(engine.rootObjects().first()));
 	return app.exec();
 }

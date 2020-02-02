@@ -1,76 +1,45 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.6
-
-Component {
-    id: dashboardComponent
-
-    signal musicPressed()
-    signal radioPressed()
-    signal cameraPressed()
-
-    property int abstand: 30
-    property int buttonHeight: 75
-    property int buttonWidth: 150
-
-    Item {
-        y: abstand
-        x: abstand
+import QtQuick.Controls 2.
+Item {
+        id: dashboardView
+        property int abstand: 30
+        property int buttonHeight: 75
+        property int buttonWidth: 150
         height: 80
-        width: 3*height + 2*abstand
+        width: 4 * dashboardView.buttonWidth + 3 * dashboardView.abstand
+        anchors.centerIn: parent
 
-        Rectangle {
+        DashboardButton {
             id: musicbutton
-            color: "green"
-            width: buttonWidth
-            height: buttonHeight
             anchors.left: parent.left
-            anchors.top: parent.top
-
-            Text {
-                text: "Musik"
-                anchors.centerIn: parent
-            }
-
-            TapHandler {
-                onTapped: musicPressed()
-            }
+            color: musicColor
+            text: "Musik"
+            onClicked: stack.push(musicView)
         }
 
-        Rectangle {
+        DashboardButton {
             id: radiobutton
-            width: buttonWidth
-            height: buttonHeight
             anchors.left: musicbutton.right
-            anchors.leftMargin: abstand
-            anchors.top: parent.top
-            color: "red"
-
-            Text {
-                text: "Radio"
-                anchors.centerIn: parent
-            }
-            TapHandler {
-                onTapped: radioPressed()
-            }
+            color: radioColor
+            text: "Radio"
+            onClicked: stack.push(radioView)
         }
 
-        Rectangle {
+        DashboardButton {
             id: camerabutton
-            width: buttonWidth
-            height: buttonHeight
             anchors.left: radiobutton.right
-            anchors.leftMargin: abstand
-            anchors.top: parent.top
-            color: "yellow"
+            color: cameraColor
+            text: "Camera"
+            onClicked: stack.push(cameraView)
+        }
 
-            Text {
-                text: "Camera"
-                anchors.centerIn: parent
-            }
-
-            TapHandler {
-                onTapped: cameraPressed()
-            }
+        // navigation
+        DashboardButton {
+            id: navigationbutton
+            anchors.left: camerabutton.right
+            color: navigationColor
+            text: "Navigation"
+            onClicked: stack.push(navigationView)
         }
     }
 
