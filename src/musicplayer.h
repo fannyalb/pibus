@@ -35,7 +35,7 @@ private:
     bool m_isStartup;
 
     void initPlayer();
-    void setUIMusicView();
+    void setUIWindow();
 };
 
 #endif // MUSICPLAYER_H

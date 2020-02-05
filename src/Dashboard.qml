@@ -1,10 +1,14 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
-Item {
+Rectangle {
         id: dashboardView
         property int abstand: 30
         property int buttonHeight: 75
         property int buttonWidth: 150
+        height: 480; width: 800
+        anchors.centerIn: parent
+
+        Item{
         height: 80
         width: 4 * dashboardView.buttonWidth + 3 * dashboardView.abstand
         anchors.centerIn: parent
@@ -46,3 +50,4 @@ Item {
         }
     }
 
+}
