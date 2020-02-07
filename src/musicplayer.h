@@ -12,15 +12,18 @@ class MusicPlayer : public QObject
 	Q_PROPERTY(QString songName READ songName WRITE setSongName NOTIFY songNameChanged)
 
 public:
-    explicit MusicPlayer(QObject *parent = nullptr, QQuickWindow* window = nullptr);
+    explicit MusicPlayer(QObject *parent = nullptr);
     void start();
     QString songName();
     void setSongName(QString &songName);
 
-private slots:
+public slots:
     void pausePlayer();
     void startPlayer();
     void stopPlayer();
+    void volumeUp();
+    void volumeDown();
+    void volumeMute();
 
 signals:
 	void songNameChanged();
@@ -29,13 +32,10 @@ signals:
 private:
     QString m_songName;
     QMediaPlayer* m_player;
-    QQuickWindow* m_window;
-    QObject* m_musicView;
     bool m_isActive;
     bool m_isStartup;
-
-    void initPlayer();
-    void setUIWindow();
+    int m_lastVolume = 50;
+    bool m_isMuted = false;
 };
 
 #endif // MUSICPLAYER_H

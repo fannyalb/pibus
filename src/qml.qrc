@@ -6,7 +6,7 @@
         <file>RadioButton.qml</file>
         <file>RadioView.qml</file>
         <file>DashboardButton.qml</file>
-        <file>Button.qml</file>
+        <file>MyButton.qml</file>
         <file>MusicView.qml</file>
     </qresource>
 </RCC>

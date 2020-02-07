@@ -984,12 +984,12 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
 qrc_qml.cpp: src/qml.qrc \
 		/usr/lib64/qt5/bin/rcc \
-		src/Button.qml \
 		src/NavigationView.qml \
 		src/MusicView.qml \
 		src/Dashboard.qml \
 		src/RadioView.qml \
 		src/DashboardButton.qml \
+		src/MyButton.qml \
 		src/RadioButton.qml \
 		src/main.qml
 	/usr/lib64/qt5/bin/rcc -name qml src/qml.qrc -o qrc_qml.cpp

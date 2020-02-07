@@ -13,18 +13,21 @@ int main(int argc, char **argv){
 
 //	QQmlApplicationEngine engine;
     Dashboard dashboard;
-    MusicPlayer musicPlayer;
+//    MusicPlayer musicPlayer;
 //    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 //	dashboard.setUIWindow(qobject_cast<QQuickWindow*>(engine.rootObjects().first()));
 
+    QMediaPlayer mediaPlayer;
 
-    QQmlEngine engine;
-    engine.rootContext()->setContextProperty("musicplayer", &musicPlayer);
-    QQmlComponent component(&engine, QUrl::fromLocalFile("src/main.qml"));
 
-//    engine()->rootContext()->setContextProperty("musicplayer", &musicPlayer);
-    QObject *object = component.create();
-    QQuickWindow *window = qobject_cast<QQuickWindow*>(object);
-    dashboard.setUIWindow(window);
+    QQuickView view;
+    view.rootContext()->setContextProperty("musicplayer", &mediaPlayer);
+    view.rootContext()->setContextProperty("dashboard", &dashboard);
+    view.setSource(QUrl::fromLocalFile("src/main.qml"));
+    view.show();
+
+//    QObject *object = component.create();
+//    QQuickWindow *window = qobject_cast<QQuickWindow*>(object);
+//    dashboard.setUIWindow(window);
 	return app.exec();
 }

@@ -7,12 +7,12 @@ ApplicationWindow{
     width: 800
     visible: true
 
-    signal musicPressed()
-    signal radioPressed()
-    signal cameraPressed()
-    signal playPressed()
-    signal pausePressed()
-    signal stopPressed()
+//    signal musicPressed()
+//    signal radioPressed()
+//    signal cameraPressed()
+//    signal playPressed()
+//    signal pausePressed()
+//    signal stopPressed()
 
     property string musicColor: "#2275A5"
     property string radioColor: "#EA7317"

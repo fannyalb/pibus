@@ -18,10 +18,7 @@ class Dashboard : public QObject
 public:
     explicit Dashboard(QObject *parent = nullptr);
 
-public slots: 
-	void setUIWindow(QQuickWindow* window);
-
-private slots:
+public slots:
 	void musicButtonPressed();
 	void radioButtonPressed();
 	void cameraButtonPressed();

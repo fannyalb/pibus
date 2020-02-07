@@ -1,25 +1,12 @@
 #include "musicplayer.h"
 #include <QDebug>
 
-MusicPlayer::MusicPlayer(QObject *parent, QQuickWindow* window) :
+MusicPlayer::MusicPlayer(QObject *parent) :
 	QObject(parent)
 {
     m_player = new QMediaPlayer;
-    m_window = window;
-    m_musicView = nullptr;
-    qDebug() << "Player startup";
-    setUIWindow();
-}
-
-void MusicPlayer::setUIWindow(){
-    qDebug() << "set ui musicview ";
-    m_isActive = true;
     m_isStartup = true;
-    QObject::connect(m_window, SIGNAL(playPressed()), this, SLOT(startPlayer()));
-    QObject::connect(m_window, SIGNAL(stopPressed()), this, SLOT(stopPlayer()));
-    QObject::connect(m_window, SIGNAL(pausePressed()), this, SLOT(pausePlayer()));
-    QString name = "toxicity.mp3";
-    setSongName(name);
+    qDebug() << "Player startup";
 }
 
 void MusicPlayer::start(){
@@ -28,10 +15,12 @@ void MusicPlayer::start(){
         qDebug() << "starting for the first time ...";
         m_player->setVolume(50);
         m_isStartup = false;
+        m_isActive = true;
     }
+    QString name = "toxicity.mp3";
+    setSongName(name);
     qDebug()<<"Music m_player: media = " + m_player->currentMedia().canonicalUrl().toString();
 }
-
 
 void MusicPlayer::startPlayer(){
     qDebug()<<"Music m_player: start pressed";
@@ -44,6 +33,25 @@ void MusicPlayer::startPlayer(){
 void MusicPlayer::stopPlayer(){
     qDebug()<<"Music m_player: stop pressed";
     m_player->stop();
+}
+
+void MusicPlayer::volumeUp()
+{
+   int newVolume = m_player->volume() + 1;
+   m_player->setVolume(newVolume);
+}
+
+void MusicPlayer::volumeDown()
+{
+   m_lastVolume = m_player->volume();
+   int newVolume = m_lastVolume - 1;
+   m_player->setVolume(newVolume);
+}
+
+void MusicPlayer::volumeMute()
+{
+   m_player->setMuted(m_isMuted);
+   m_isMuted = !m_isMuted;
 }
 
 QString MusicPlayer::songName() {

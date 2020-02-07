@@ -19,7 +19,7 @@ Rectangle {
             color: musicColor
             text: "Musik"
             onClicked: {
-                musicPressed()
+                dashboard.musicButtonPressed()
                 stack.push(musicView)
             }
         }
