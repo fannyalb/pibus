@@ -11,23 +11,10 @@ int main(int argc, char **argv){
 	QGuiApplication app(argc, argv);
 
 
-//	QQmlApplicationEngine engine;
+    QQmlApplicationEngine engine;
+    QQmlContext* context = engine.rootContext();
     Dashboard dashboard;
-//    MusicPlayer musicPlayer;
-//    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-//	dashboard.setUIWindow(qobject_cast<QQuickWindow*>(engine.rootObjects().first()));
-
-//    QMediaPlayer mediaPlayer;
-
-
-    QQuickView view;
-//    view.rootContext()->setContextProperty("musicplayer", &mediaPlayer);
-    view.rootContext()->setContextProperty("dashboard", &dashboard);
-    view.setSource(QUrl::fromLocalFile("src/main.qml"));
-    view.show();
-
-//    QObject *object = component.create();
-//    QQuickWindow *window = qobject_cast<QQuickWindow*>(object);
-//    dashboard.setUIWindow(window);
+    context->setContextProperty("dashboard", &dashboard);
+    engine.load(QUrl::fromLocalFile("src/main.qml"));
 	return app.exec();
 }

@@ -10,6 +10,7 @@ Item {
     width: parent.width
     height: parent.height
     property string dir: "/home/fanny/Musik/"
+        property int musicBtnHeight: 50
 
     MediaPlayer {
         id: musicplayer
@@ -21,7 +22,6 @@ Item {
         width: parent.width
         height: parent.height
 
-        property int musicBtnHeight: 50
         Column {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -37,7 +37,7 @@ Item {
                     Text {
                         anchors.centerIn: parent
                         font.pointSize: 25
-                        text: musicplayer.metaData.title
+                        text: "song"
                     }
                 }
             }
@@ -73,7 +73,6 @@ Item {
 
 
             Row {
-                property int musicBtnHeight: 50
                 spacing: 10
 
                 Button {

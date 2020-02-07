@@ -1,18 +1,18 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.3
-import QtMultimedia 5.11
+import QtQuick 2.12
+import QtQuick.Controls 2.6
+import QtMultimedia 5.12
 
 ApplicationWindow{
     height: 480
     width: 800
     visible: true
 
-//    signal musicPressed()
-//    signal radioPressed()
-//    signal cameraPressed()
-//    signal playPressed()
-//    signal pausePressed()
-//    signal stopPressed()
+    signal musicPressed()
+    signal radioPressed()
+    signal cameraPressed()
+    signal playPressed()
+    signal pausePressed()
+    signal stopPressed()
 
     property string musicColor: "#2275A5"
     property string radioColor: "#EA7317"
@@ -68,9 +68,9 @@ ApplicationWindow{
     }
 
     // Navigation View
-    NavigationView {
-        id: navigationView
-        color: navigationColor
-    }
+//    NavigationView {
+//        id: navigationView
+//        color: navigationColor
+//    }
 }
 
