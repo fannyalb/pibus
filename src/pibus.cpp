@@ -17,11 +17,11 @@ int main(int argc, char **argv){
 //    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 //	dashboard.setUIWindow(qobject_cast<QQuickWindow*>(engine.rootObjects().first()));
 
-    QMediaPlayer mediaPlayer;
+//    QMediaPlayer mediaPlayer;
 
 
     QQuickView view;
-    view.rootContext()->setContextProperty("musicplayer", &mediaPlayer);
+//    view.rootContext()->setContextProperty("musicplayer", &mediaPlayer);
     view.rootContext()->setContextProperty("dashboard", &dashboard);
     view.setSource(QUrl::fromLocalFile("src/main.qml"));
     view.show();

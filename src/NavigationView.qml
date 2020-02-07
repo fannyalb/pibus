@@ -1,8 +1,8 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.6
-import QtQuick.Shapes 1.12
-import QtPositioning 5.12
-import QtLocation 5.12
+import QtQuick 2.11
+import QtQuick.Controls 2.3
+import QtQuick.Shapes 1.11
+import QtPositioning 5.11
+import QtLocation 5.11
 
 Rectangle {
     width: parent.width

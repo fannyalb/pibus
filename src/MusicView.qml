@@ -1,7 +1,7 @@
 import QtQuick 2.0
-import Qt.labs.folderlistmodel 2.12
-import  QtQuick.Controls 2.0
-import QtMultimedia 5.12
+import Qt.labs.folderlistmodel 2.11
+import  QtQuick.Controls 2.3
+import QtMultimedia 5.11
 
 // Music View
 Item {
@@ -9,7 +9,7 @@ Item {
     visible: false
     width: parent.width
     height: parent.height
-    property string dir: "home/fanny/Musik/"
+    property string dir: "/home/fanny/Musik/"
 
     MediaPlayer {
         id: musicplayer
@@ -98,6 +98,15 @@ Item {
                     icon.color: "transparent"
                     icon.source: "images/pause.svg"
                     onClicked: musicplayer.pause()
+                }
+
+                Button {
+                    height: musicBtnHeight
+                    icon.color: "transparent"
+                    icon.source: "images/volume_down.svg"
+                    onClicked: {
+                        musicplayer.volume = musicplayer.volume - 0.1
+                    }
                 }
 
             }
