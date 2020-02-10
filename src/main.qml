@@ -37,6 +37,23 @@ ApplicationWindow{
         anchors.fill: parent
     }
 
+    Popup {
+        id: popup
+        property alias msg: popupMsg.text
+        x: Math.round((parent.width - width) /2)
+        y: 50
+        width: 300
+        height: 200
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape |
+                     Popup.CloseOnPressOutside
+        contentItem: Text {
+            id: popupMsg
+            text: "Content"
+        }
+    }
+
     Dashboard {
         id: dashboardView
     }
@@ -67,10 +84,10 @@ ApplicationWindow{
         }
     }
 
-    // Navigation View
-//    NavigationView {
-//        id: navigationView
-//        color: navigationColor
-//    }
+//     NavigationView
+    NavigationView {
+        id: navigationView
+        color: navigationColor
+    }
 }
 

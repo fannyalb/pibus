@@ -6,6 +6,7 @@
         <file>RadioButton.qml</file>
         <file>RadioView.qml</file>
         <file>DashboardButton.qml</file>
+        <file>MyButton.qml</file>
         <file>MusicView.qml</file>
         <file>images/next.svg</file>
         <file>images/pause.svg</file>
@@ -18,10 +19,5 @@
         <file>images/volume_down.svg</file>
         <file>images/volume_off.svg</file>
         <file>images/volume_up.svg</file>
-        <file>images/marker.png</file>
-        <file>AddressForm.qml</file>
-        <file>MapComponent.qml</file>
-        <file>Geocode.qml</file>
-        <file>Marker.qml</file>
     </qresource>
 </RCC>

@@ -5,4 +5,7 @@ sysroot/
 *.py
 *.xz
 qt-everywhere-src-5.12.5/
+moc_*
+config.*
+.qmake*
 
