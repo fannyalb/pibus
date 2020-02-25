@@ -2,7 +2,7 @@
 #include <QDebug>
 
 MusicPlayer::MusicPlayer(QObject *parent) :
-	QObject(parent)
+    QObject(parent)
 {
     m_player = new QMediaPlayer;
     m_isStartup = true;

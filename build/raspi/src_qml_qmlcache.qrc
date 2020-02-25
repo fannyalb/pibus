@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/">
+        <file alias="images/next.svg">../../src/images/next.svg</file>
+        <file alias="images/pause.svg">../../src/images/pause.svg</file>
+        <file alias="images/play.svg">../../src/images/play.svg</file>
+        <file alias="images/playlist_add.svg">../../src/images/playlist_add.svg</file>
+        <file alias="images/previous.svg">../../src/images/previous.svg</file>
+        <file alias="images/replay.svg">../../src/images/replay.svg</file>
+        <file alias="images/shuffle.svg">../../src/images/shuffle.svg</file>
+        <file alias="images/stop.svg">../../src/images/stop.svg</file>
+        <file alias="images/volume_down.svg">../../src/images/volume_down.svg</file>
+        <file alias="images/volume_off.svg">../../src/images/volume_off.svg</file>
+        <file alias="images/volume_up.svg">../../src/images/volume_up.svg</file>
+        <file alias="images/marker.png">../../src/images/marker.png</file>
+    </qresource>
+</RCC>

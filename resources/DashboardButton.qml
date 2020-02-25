@@ -18,6 +18,12 @@ Rectangle {
         anchors.centerIn: parent
     }
 
+    MouseArea {
+        anchors.fill: parent
+        onClicked: dashboardButton.clicked()
+    }
+
+
     TapHandler {
         onTapped: dashboardButton.clicked()
     }

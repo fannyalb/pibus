@@ -5,9 +5,9 @@
 TEMPLATE = app
 TARGET = pibus
 INCLUDEPATH += .
-RESOURCES = src/qml.qrc
 QT += widgets qml multimedia quick location multimediawidgets positioning
 QT += network
+CONFIG += c++11
 
 # The following define makes your compiler warn you if you use any
 # feature of Qt which has been marked as deprecated (the exact warnings
@@ -21,5 +21,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-HEADERS = src/*.h
-SOURCES = src/*.cpp
+HEADERS += $$PWD/src/*.h \ 
+    src/logfilepositionsource.h
+SOURCES += $$PWD/src/*.cpp \  
+    src/logfilepositionsource.cpp
+RESOURCES = $$PWD/resources/qml.qrc
+
+# Additional import path used to resolve QML modules in Qt Creator's code model
+QML_IMPORT_PATH =
+
+# Additional import path used to resolve QML modules just for Qt Quick Designer
+QML_DESIGNER_IMPORT_PATH =
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target

@@ -3,19 +3,39 @@ import QtLocation 5.6
 import QtPositioning 5.5
 import QtQuick.Controls 2.3
 import QtQuick.Shapes 1.11
-import QtQuick.VirtualKeyboard 2.11
+import gpsmodel 1.0
+//import QtQuick.VirtualKeyboard 2.11
 
 Rectangle {
     id: navigationRect
     width: parent.width
     height: parent.height
     visible: false
-    property variant locationInnsburck: QtPositioning.coordinate(47.2870, 11.4232)
+    property variant locationBerlin:
+        QtPositioning.coordinate(52.5104, 13.3855)
+    property variant currentLocation;
 
     function places(){
         searchModel.searchTerm = queryField.text
         searchModel.update()
         placesDrawer.visible = true
+    }
+
+    PositionSource{
+        id: positionSrc
+        updateInterval: 1000
+        active: true
+        nmeaSource: "socket://192.168.8.165:12345"
+        onPositionChanged: {
+            var coord = positionSrc.position.coordinate;
+            currentLocation = coord;
+            console.log("Coordinate: ",
+                        coord.longitude, coord.latitude)
+        }
+    }
+
+    GpsModel {
+        id: gpsModel
     }
 
     Text {
@@ -159,7 +179,7 @@ Rectangle {
 
         TextField {
             id: queryField
-            height: 30
+            height: 40
             width: 200
         }
 
@@ -172,6 +192,19 @@ Rectangle {
             }
         }
 
+        TextField {
+            id: gpsModelField
+            height: 80
+            width: 200
+            text: "Long: " + currentLocation.longitude
+        }
+
+        Button {
+            id: gpsModelBtn
+            text: "Update GPS"
+            onClicked: gpsModel.updateGpsData()
+        }
+
         Button {
             id: searchButton
             text: "Ort suchen"
@@ -181,6 +214,8 @@ Rectangle {
                 stack.currentItem.showPlace.connect(map.geocode)
             }
         }
+
+
     }
 }
 

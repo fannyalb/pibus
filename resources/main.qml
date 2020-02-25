@@ -20,7 +20,6 @@ ApplicationWindow{
     property string navigationColor: "#73BEB8"
     property string otherColor: "#3DA5D9"
 
-
     menuBar: MenuBar {
         MenuBarItem {
             id: backButton
@@ -87,7 +86,6 @@ ApplicationWindow{
 //     NavigationView
     NavigationView {
         id: navigationView
-        color: navigationColor
     }
 }
 
