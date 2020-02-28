@@ -2,67 +2,62 @@
 using namespace std;
 
 GpsModel::GpsModel(QObject *parent) :
-  QObject(parent)
+    QObject(parent)
 {
+    m_gpsdClient = new GpsdClient(this);
+    connect(m_gpsdClient, SIGNAL(readyRead()), this, SLOT(connectDevice()));
+}
+
+void GpsModel::connectDevice(){
+    qDebug() << "Connect Device...";
+    m_gpsDevice = m_gpsdClient->createDevice();
+    connect(m_gpsDevice, SIGNAL(readyRead()), this, SLOT(readGpsData()));
+}
+
+void GpsModel::readGpsData(){
+    qDebug() << "Reading gpsData";
+    if(m_gpsDevice->isReadable()){
+        qDebug() << "Device readable";
+        QByteArray line = m_gpsDevice->readLine();
+        if(line.contains("lat")){
+            qDebug() << "Lat!: " << line;
+            QJsonDocument jsonDoc(QJsonDocument::fromJson(line));
+            jsonToCoordinate(jsonDoc.object());
+        }
+    }
 
 }
 
-void GpsModel::updateGpsData(){
-    qDebug() << "Updating Gps Data...";
-    string text;
-    string filename = "/home/fanny/gpsdata.txt";
-    ifstream file;
+void GpsModel::jsonToCoordinate(const QJsonObject &json){
+    double lon, lat;
+    if(json.contains("lat") && json["lat"].isDouble())
+        lon = json["lat"].toDouble();
+    if(json.contains("lon") && json["lon"].isDouble())
+        lat = json["lon"].toDouble();
+    setCoordinate(lon, lat);
 
-    file.open(filename);
-    if(!file){
-        cerr << "Unable to open File " << filename;
-        return;
-    }
+}
 
-    while(getline(file, text)){
-        qDebug() << text.data() << text.c_str();
-        char *token;
-        char c_text[text.size() + 1];
-        strcpy(c_text, text.c_str());
-        char delimiter[] = ",";
+QGeoCoordinate GpsModel::coordinate() const
+{
+    return m_coordinate;
+}
 
-        token = strtok(c_text, delimiter);
-        int i = 0;
-        while(token != nullptr){
-            if(i == 1){
-                qDebug() << token;
-                setLatitude(stod(token));
-            }
-            if(i == 3){
-                qDebug() << token;
-                setLongitude(stod(token));
-            }
-            token = strtok(NULL, ",");
-            i++;
-        }
-    }
-    file.close();
+void GpsModel::setCoordinate(double lon, double lat)
+{
+    QGeoCoordinate coord(lon, lat);
+    m_coordinate = coord;
+    emit coordinateChanged();
+    emit positionChanged(m_coordinate);
 }
 
 double GpsModel::longitude() const
 {
-  return m_longitude;
-}
-
-void GpsModel::setLongitude(double longitude)
-{
-  m_longitude = longitude;
-  emit latitudeChanged();
+    coordinate().longitude();
 }
 
 double GpsModel::latitude() const
 {
-  return m_latitude;
+    return coordinate().latitude();
 }
 
-void GpsModel::setLatitude(double latitude)
-{
-    qDebug() << m_latitude << " vs " << latitude;
-    m_latitude = latitude;
-    emit longitudeChanged();
-}

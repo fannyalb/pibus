@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.6
 import QtMultimedia 5.12
+import QtPositioning 5.8
 
 ApplicationWindow{
     height: 480

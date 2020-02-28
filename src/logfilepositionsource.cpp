@@ -1,5 +1,5 @@
+#include <QtCore>
 #include "logfilepositionsource.h"
-
 
 LogFilePositionSource::LogFilePositionSource(QObject *parent)
     : QGeoPositionInfoSource(parent),
@@ -8,9 +8,25 @@ LogFilePositionSource::LogFilePositionSource(QObject *parent)
 {
     connect(timer, SIGNAL(timeout()), this, SLOT(readNextPosition()));
 
-    logFile->setFileName(":/simplelog.txt");
-    if (!logFile->open(QIODevice::ReadOnly))
-        qWarning() << "Error: cannot open source file" << logFile->fileName();
+    logFile->setFileName(":/gpsdata.txt");
+    if(!logFile->open(QIODevice::ReadOnly))
+        qWarning() << "Error cannot open source file" << logFile->fileName();
+
+}
+
+QGeoPositionInfo LogFilePositionSource::lastKnownPosition(bool /*fromSatellitePositioningMethodsOnly*/) const
+{
+    return lastPosition;
+}
+
+LogFilePositionSource::PositioningMethods LogFilePositionSource::supportedPositioningMethods() const
+{
+    return AllPositioningMethods;
+}
+
+int LogFilePositionSource::minimumUpdateInterval() const
+{
+    return 500;
 }
 
 void LogFilePositionSource::startUpdates()
@@ -46,7 +62,8 @@ void LogFilePositionSource::readNextPosition()
         double longitude;
         bool hasLatitude = false;
         bool hasLongitude = false;
-        QDateTime timestamp = QDateTime::fromString(QString(data.value(0)), Qt::ISODate);
+        QDateTime timestamp = QDateTime::fromString(QString(data.value(0)),
+                                                    Qt::ISODate);
         latitude = data.value(1).toDouble(&hasLatitude);
         longitude = data.value(2).toDouble(&hasLongitude);
 
@@ -59,4 +76,9 @@ void LogFilePositionSource::readNextPosition()
             }
         }
     }
+}
+
+QGeoPositionInfoSource::Error LogFilePositionSource::error() const
+{
+    return QGeoPositionInfoSource::NoError;
 }

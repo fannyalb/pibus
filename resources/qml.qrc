@@ -24,5 +24,6 @@
         <file>Geocode.qml</file>
         <file>Marker.qml</file>
         <file>images/search.svg</file>
+        <file>images/my_location.svg</file>
     </qresource>
 </RCC>

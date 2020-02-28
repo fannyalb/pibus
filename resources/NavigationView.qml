@@ -4,7 +4,9 @@ import QtPositioning 5.5
 import QtQuick.Controls 2.3
 import QtQuick.Shapes 1.11
 import gpsmodel 1.0
+//import logfilepositionsource 1.0
 //import QtQuick.VirtualKeyboard 2.11
+
 
 Rectangle {
     id: navigationRect
@@ -21,21 +23,18 @@ Rectangle {
         placesDrawer.visible = true
     }
 
-    PositionSource{
-        id: positionSrc
-        updateInterval: 1000
-        active: true
-        nmeaSource: "socket://192.168.8.165:12345"
-        onPositionChanged: {
-            var coord = positionSrc.position.coordinate;
-            currentLocation = coord;
-            console.log("Coordinate: ",
-                        coord.longitude, coord.latitude)
-        }
+    Row {
+        anchors.top: parent.top
+        anchors.left: parent.left
+       TextField {
+           text: "Lon: " + gpsModel.longitude +
+                 "\nLat: " + gpsModel.latitude
+       }
     }
 
     GpsModel {
         id: gpsModel
+        onCoordinateChanged: currentLocation = gpsModel.coordinate
     }
 
     Text {
@@ -192,19 +191,6 @@ Rectangle {
             }
         }
 
-        TextField {
-            id: gpsModelField
-            height: 80
-            width: 200
-            text: "Long: " + currentLocation.longitude
-        }
-
-        Button {
-            id: gpsModelBtn
-            text: "Update GPS"
-            onClicked: gpsModel.updateGpsData()
-        }
-
         Button {
             id: searchButton
             text: "Ort suchen"
@@ -215,9 +201,14 @@ Rectangle {
             }
         }
 
-
+        Button {
+            id: myLocationBtn
+            icon.source: "images/my_location.svg"
+            onClicked: {
+                map.center = currentLocation
+            }
+        }
     }
 }
-
 
 

@@ -14,7 +14,7 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_MULTIMEDIAWIDGETS_LIB -DQT_WIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_LOCATION_LIB -DQT_POSITIONINGQUICK_LIB -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_POSITIONING_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_PLUGIN -DQT_MULTIMEDIAWIDGETS_LIB -DQT_WIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_LOCATION_LIB -DQT_POSITIONINGQUICK_LIB -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_POSITIONING_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtMultimediaWidgets -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtMultimedia -isystem /usr/include/qt5/QtLocation -isystem /usr/include/qt5/QtPositioningQuick -isystem /usr/include/qt5/QtQuick -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtQml -isystem /usr/include/qt5/QtNetwork -isystem /usr/include/qt5/QtPositioning -isystem /usr/include/qt5/QtCore -I. -isystem /usr/include/libdrm -I/usr/lib64/qt5/mkspecs/linux-g++
@@ -53,30 +53,43 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = src/dashboard.cpp \
+		src/gpsdpositioninfosource.cpp \
 		src/gpsmodel.cpp \
+		src/logfilepositionsource.cpp \
 		src/musicplayer.cpp \
 		src/pibus.cpp qrc_qml.cpp \
 		moc_dashboard.cpp \
+		moc_gpsdpositioninfosource.cpp \
 		moc_gpsmodel.cpp \
+		moc_logfilepositionsource.cpp \
 		moc_musicplayer.cpp
 OBJECTS       = dashboard.o \
+		gpsdpositioninfosource.o \
 		gpsmodel.o \
+		logfilepositionsource.o \
 		musicplayer.o \
 		pibus.o \
 		qrc_qml.o \
 		moc_dashboard.o \
+		moc_gpsdpositioninfosource.o \
 		moc_gpsmodel.o \
+		moc_logfilepositionsource.o \
 		moc_musicplayer.o
 DIST          = .qmake.stash \
 		pibus.pro src/dashboard.h \
+		src/gpsdpositioninfosource.h \
 		src/gpsmodel.h \
+		src/logfilepositionsource.h \
 		src/musicplayer.h src/dashboard.cpp \
+		src/gpsdpositioninfosource.cpp \
 		src/gpsmodel.cpp \
+		src/logfilepositionsource.cpp \
 		src/musicplayer.cpp \
 		src/pibus.cpp
 QMAKE_TARGET  = pibus
 DESTDIR       = 
 TARGET        = pibus
+TARGETD       = pibus
 
 
 first: all
@@ -678,8 +691,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents resources/qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/dashboard.h src/gpsmodel.h src/musicplayer.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/dashboard.cpp src/gpsmodel.cpp src/musicplayer.cpp src/pibus.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/dashboard.h src/gpsdpositioninfosource.h src/gpsmodel.h src/logfilepositionsource.h src/musicplayer.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/dashboard.cpp src/gpsdpositioninfosource.cpp src/gpsmodel.cpp src/logfilepositionsource.cpp src/musicplayer.cpp src/pibus.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -740,19 +753,29 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib64/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib64/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_dashboard.cpp moc_gpsmodel.cpp moc_musicplayer.cpp
+compiler_moc_header_make_all: moc_dashboard.cpp moc_gpsdpositioninfosource.cpp moc_gpsmodel.cpp moc_logfilepositionsource.cpp moc_musicplayer.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_dashboard.cpp moc_gpsmodel.cpp moc_musicplayer.cpp
+	-$(DEL_FILE) moc_dashboard.cpp moc_gpsdpositioninfosource.cpp moc_gpsmodel.cpp moc_logfilepositionsource.cpp moc_musicplayer.cpp
 moc_dashboard.cpp: src/dashboard.h \
 		src/musicplayer.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
 	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/fanny/gitprogs/pibus/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/fanny/gitprogs/pibus -I/home/fanny/gitprogs/pibus -I/usr/include/qt5 -I/usr/include/qt5/QtMultimediaWidgets -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtLocation -I/usr/include/qt5/QtPositioningQuick -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtPositioning -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include src/dashboard.h -o moc_dashboard.cpp
 
+moc_gpsdpositioninfosource.cpp: src/gpsdpositioninfosource.h \
+		moc_predefs.h \
+		/usr/lib64/qt5/bin/moc
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/fanny/gitprogs/pibus/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/fanny/gitprogs/pibus -I/home/fanny/gitprogs/pibus -I/usr/include/qt5 -I/usr/include/qt5/QtMultimediaWidgets -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtLocation -I/usr/include/qt5/QtPositioningQuick -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtPositioning -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include src/gpsdpositioninfosource.h -o moc_gpsdpositioninfosource.cpp
+
 moc_gpsmodel.cpp: src/gpsmodel.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
 	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/fanny/gitprogs/pibus/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/fanny/gitprogs/pibus -I/home/fanny/gitprogs/pibus -I/usr/include/qt5 -I/usr/include/qt5/QtMultimediaWidgets -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtLocation -I/usr/include/qt5/QtPositioningQuick -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtPositioning -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include src/gpsmodel.h -o moc_gpsmodel.cpp
+
+moc_logfilepositionsource.cpp: src/logfilepositionsource.h \
+		moc_predefs.h \
+		/usr/lib64/qt5/bin/moc
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include /home/fanny/gitprogs/pibus/moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/fanny/gitprogs/pibus -I/home/fanny/gitprogs/pibus -I/usr/include/qt5 -I/usr/include/qt5/QtMultimediaWidgets -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtMultimedia -I/usr/include/qt5/QtLocation -I/usr/include/qt5/QtPositioningQuick -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtPositioning -I/usr/include/qt5/QtCore -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8 -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/x86_64-pc-linux-gnu -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/g++-v8/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include-fixed -I/usr/include src/logfilepositionsource.h -o moc_logfilepositionsource.cpp
 
 moc_musicplayer.cpp: src/musicplayer.h \
 		moc_predefs.h \
@@ -779,14 +802,22 @@ dashboard.o: src/dashboard.cpp src/dashboard.h \
 		src/musicplayer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dashboard.o src/dashboard.cpp
 
+gpsdpositioninfosource.o: src/gpsdpositioninfosource.cpp src/gpsdpositioninfosource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gpsdpositioninfosource.o src/gpsdpositioninfosource.cpp
+
 gpsmodel.o: src/gpsmodel.cpp src/gpsmodel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gpsmodel.o src/gpsmodel.cpp
+
+logfilepositionsource.o: src/logfilepositionsource.cpp src/logfilepositionsource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logfilepositionsource.o src/logfilepositionsource.cpp
 
 musicplayer.o: src/musicplayer.cpp src/musicplayer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o musicplayer.o src/musicplayer.cpp
 
 pibus.o: src/pibus.cpp src/dashboard.h \
-		src/musicplayer.h
+		src/musicplayer.h \
+		src/gpsmodel.h \
+		src/logfilepositionsource.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pibus.o src/pibus.cpp
 
 qrc_qml.o: qrc_qml.cpp 
@@ -795,8 +826,14 @@ qrc_qml.o: qrc_qml.cpp
 moc_dashboard.o: moc_dashboard.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dashboard.o moc_dashboard.cpp
 
+moc_gpsdpositioninfosource.o: moc_gpsdpositioninfosource.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gpsdpositioninfosource.o moc_gpsdpositioninfosource.cpp
+
 moc_gpsmodel.o: moc_gpsmodel.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gpsmodel.o moc_gpsmodel.cpp
+
+moc_logfilepositionsource.o: moc_logfilepositionsource.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_logfilepositionsource.o moc_logfilepositionsource.cpp
 
 moc_musicplayer.o: moc_musicplayer.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_musicplayer.o moc_musicplayer.cpp
